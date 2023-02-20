@@ -1,2 +1,2 @@
-# gms-api-test
-This is repository for testing the APIs in GMS project.
+# squareup-api-test
+This is repository for testing the APIs in Square-UP project.
