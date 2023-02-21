@@ -15,8 +15,9 @@ public class E2ETests {
         request.header("accept", "*/*");
         request.header("designationId", "0001");
         request.header("ulbCode", "ULB1");
+        //request.queryParam("employeeId","squareupadmin");
         Response response = request.get("/squareup_sna_subcomponents/web/umgmt/employees");
-        //System.out.println(response.statusCode());
+
         //System.out.println(response.statusCode());
         //System.out.println(response.getBody().prettyPrint());
         Assert.assertEquals("Status code",200,response.statusCode());
