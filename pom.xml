@@ -16,9 +16,11 @@
         <junitVersion>4.13.2</junitVersion>
         <maven.complier.version>3.10.1</maven.complier.version>
         <cucumber.java>7.11.1</cucumber.java>
+        <loombook.version>1.18.26</loombook.version>
+        <jackson_version>2.15.0-rc3</jackson_version>
         <cucumber.java.deps>1.0.6</cucumber.java.deps>
     </properties>
-
+    <!--Rest Assured dependency-->
     <dependencies>
         <dependency>
             <groupId>io.rest-assured</groupId>
@@ -50,9 +52,24 @@
             <version>${cucumber.java}</version>
             <scope>test</scope>
         </dependency>
-
-
-
+        <!-- POJO dependency-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${loombook.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson_version}</version>
+        </dependency>
     </dependencies>
 
     <build>
