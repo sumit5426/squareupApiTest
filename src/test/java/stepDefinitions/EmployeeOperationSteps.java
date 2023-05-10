@@ -2,6 +2,7 @@ package stepDefinitions;
 
 import apiEngine.request.CreateEmployee;
 import apiEngine.request.EmployeeULBDesignationEntity;
+import apiEngine.response.CreateEmployeePositiveResponse;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -10,6 +11,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Assert;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,11 +22,12 @@ import java.util.Map;
 public class EmployeeOperationSteps {
 
     private static Response response;
+    private static CreateEmployeePositiveResponse createEmployeePositiveResponse;
     private static final String baseUrl = "https://squareupuate.com/squareupdevwosubcomponentsbe";
     private static final String empId = "auto_" + LocalDate.now() + Math.random();
     private static final String token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiZXRraWFkbWluIiwiZXhwIjoxNjgxODAzNzQ1LCJpYXQiOjE2ODE3ODkzNDV9.Ah-7Ohi5JOHkF-v7zACCRXS5G02i3P7awj9tybKmzi61EtwCjucaJNCKhnFA28oqn2I9lhpvLf9CFKUO4n80KA";
 
-
+    //Serialization
     @When("The employee creation api is called")
     public void the_employee_creation_api_is_called(DataTable data) throws JsonProcessingException {
         //data Layer from cucumber feature file
@@ -49,7 +52,7 @@ public class EmployeeOperationSteps {
         createEmployee.setEmployeeULBDesignationEntities(allEmployeeULBDesignationEntity);
         ObjectMapper objectMapper = new ObjectMapper();
         String createEmpJson= objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(createEmployee);
-        System.out.println(createEmpJson);
+        //System.out.println(createEmpJson);
 
         Map<String, Object> headerMap = new HashMap<>();
         headerMap.put("Authorization", token);
@@ -66,12 +69,18 @@ public class EmployeeOperationSteps {
         request.body(createEmpJson);
         response = request.post("/web/umgmt/employees");
         // Validation of the test layer
-        System.out.println(response.asPrettyString());
+//        System.out.println(response.asPrettyString());
     }
 
-    @Then("The employee creation api response is {string}")
-    public void the_employee_creation_api_response_is(String responseCode) {
-//        System.out.println("Get Response of employee creation " + responseCode);
-        System.out.println(responseCode + "----" + response.statusCode());
+    @Then("The employee creation api response is {int}")
+    public void the_employee_creation_api_response_is(int responseCode) {
+        Assert.assertEquals(responseCode,response.statusCode());
+    }
+
+//Deserialization
+    @Then("The employee response will be {string}")
+    public void validateCreateEmpResponse(String expectedResult) {
+       createEmployeePositiveResponse = response.getBody().as(CreateEmployeePositiveResponse.class);
+       Assert.assertEquals(expectedResult,createEmployeePositiveResponse.getMessage());
     }
 }

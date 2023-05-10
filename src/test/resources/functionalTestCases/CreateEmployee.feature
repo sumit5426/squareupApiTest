@@ -15,7 +15,8 @@ Feature: Create Employee for the square up
       | employeeULBDesignationEntities_designationId | <employeeULBDesignationEntities_designationId> |
       | employeeULBDesignationEntities_activeStatus  | <employeeULBDesignationEntities_activeStatus>  |
 
-    Then The employee creation api response is "201"
+    Then The employee creation api response is <responseCode>
+    And The employee response will be "<expectedResult>"
     Examples:
-      | name       | mobileNumber | email                 | address   | designationId | gender | profilePicture | employeeULBDesignationEntities_ulbCode | employeeULBDesignationEntities_designationId | employeeULBDesignationEntities_activeStatus |
-      | autotester | 9999999999   | autotester@tester.com | Hyderabad | 4             | Male   |                | 87940                                  | 4                                            | true                                        |
+      | name       | mobileNumber | email                 | address   | designationId | gender | profilePicture | employeeULBDesignationEntities_ulbCode | employeeULBDesignationEntities_designationId | employeeULBDesignationEntities_activeStatus | responseCode | expectedResult                |
+      | autotester | 9999999999   | autotester@tester.com | Hyderabad | 4             | Male   |                | 87940                                  | 4                                            | true                                        | 201          | Employee created Successfully |
